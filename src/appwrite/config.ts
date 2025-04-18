@@ -1,4 +1,3 @@
-import { promises } from "dns";
 import config from "../conf/congif";
 import { Client, Account, ID, } from "appwrite";
 

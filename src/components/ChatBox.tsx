@@ -27,40 +27,8 @@ export const ChatBox = () => {
 
         // Start a new empty assistant message
         setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
-
-        const fullReply = await mockStreamingReply(input);
-        setIsTyping(false);
     };
 
-    const mockStreamingReply = async (prompt: string) => {
-        const replyText = `Sure! Here's a streaming response about "${prompt}". It appears as if I'm typing it... character by character. ✨`;
-
-        for (let i = 0; i < replyText.length; i++) {
-            await new Promise((res) => setTimeout(res, 25)); // typing speed
-
-            setMessages((prev) => {
-                const updated = [...prev];
-                const last = updated[updated.length - 1];
-
-                // Append characters one by one to the assistant's last message
-                if (last.role === "assistant") {
-                    updated[updated.length - 1] = {
-                        ...last,
-                        content: last.content + replyText[i],
-                    };
-                }
-                return updated;
-            });
-        }
-
-        return replyText;
-    };
-
-
-    const mockGptReply = async (prompt: string) => {
-        await new Promise((res) => setTimeout(res, 1000));
-        return `Here's what I think about "${prompt}" 🤖`;
-    };
 
     return (
         <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black text-white px-4 py-6 overflow-hidden">
