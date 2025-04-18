@@ -18,7 +18,7 @@ const account = new Account(client);
 
 export class AppWriteService{
     // create a new record of user inside appwrite
-    async createUserAccount({name, email, password}: CreateUserAccount) {
+async createUserAccount({name, email, password}: CreateUserAccount) {
         try {
             const userAccount = await account.create(ID.unique(), email, password, name);
             if(userAccount) {
