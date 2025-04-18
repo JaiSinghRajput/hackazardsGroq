@@ -1,5 +1,5 @@
 "use client";
-import appWriteService from "@/appwrite/config";
+import appWriteService from "@/lib/appwrite";
 import useAuth from "@/context/useAuth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

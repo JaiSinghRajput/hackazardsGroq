@@ -1,34 +1,24 @@
-"use client";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/Navbar";
-import useAuth from "@/context/useAuth";
+import './globals.css'
+import { Inter } from 'next/font/google'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ['latin'] })
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+export const metadata = {
+  title: 'Create next and appwrite app',
+  description: 'learning it on youtube',
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const { authStatus } = useAuth();
-
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* Conditionally render Navbar based on authStatus */}
-        {authStatus && <Navbar />}
-        {/* Render the children components (the main content) */}
-        <main>{children}</main>
-      </body>
+      <body className={inter.className}>
+        
+        {children}
+        </body>
     </html>
-  );
+  )
 }

@@ -1,46 +1,35 @@
-"use client";
-import { useContext } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 import useAuth from "@/context/useAuth";
-
+import Link from "next/link";
+import { Sparkles } from "lucide-react";
 const Navbar = () => {
-    const { authStatus } = useAuth(); // Access the auth status from context
-    const router = useRouter();
-    return (
-        <nav className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 flex items-center justify-between shadow-lg rounded-b-lg">
-            {/* Logo or brand */}
-            <div className="text-white text-2xl font-bold cursor-pointer">
-                <Link href="/">MyApp</Link>
-            </div>
+  const { authStatus } = useAuth(); // or replace with your actual auth state
 
-            {/* Navigation links */}
-            <div className="space-x-6">
-                <Link
-                    href="/"
-                    className="text-white text-lg hover:text-yellow-200 transition-all"
-                >
-                    Home
-                </Link>
-                <Link
-                    href="/profile"
-                    className="text-white text-lg hover:text-yellow-200 transition-all"
-                >
-                    Profile
-                </Link>
-            </div>
+  return (
+    <nav className="w-full backdrop-blur-lg bg-white/5 border-b border-white/10 shadow-sm fixed top-0 z-50">
+      <div className="max-w-screen-xl mx-auto px-4 py-3 flex items-center justify-between">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 text-purple-300 hover:text-purple-400 transition-all">
+          <Sparkles className="w-5 h-5" />
+          <span className="font-bold text-lg tracking-wide">Groqify</span>
+        </Link>
 
-            {/* Optional: Mobile menu icon for small screens */}
-            <div className="lg:hidden">
-                <button
-                    onClick={() => router.push("/profile")}
-                    className="text-white text-lg"
-                >
-                    ☰
-                </button>
-            </div>
-        </nav>
-    );
+        {/* Nav Links */}
+        <div className="hidden md:flex items-center gap-6 text-white/80 text-sm font-medium">
+          <Link href="/" className="hover:text-purple-400 transition">Home</Link>
+          <Link href="/chat" className="hover:text-purple-400 transition">Chat</Link>
+          <Link href="/about" className="hover:text-purple-400 transition">About</Link>
+        </div>
+
+        {/* Conditional CTA */}
+        <Link
+          href={authStatus ? "/chat" : "/login"}
+          className="ml-4 px-4 py-2 text-sm bg-gradient-to-br from-purple-600 to-blue-500 text-white rounded-lg hover:opacity-90 transition hidden md:inline-block"
+        >
+          {authStatus ? "Start Chatting" : "Login"}
+        </Link>
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;

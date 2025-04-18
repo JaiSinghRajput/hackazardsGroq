@@ -1,4 +1,4 @@
-import config from "../conf/congif";
+import config from "@/conf/congif";
 import { Client, Account, ID, } from "appwrite";
 
 type CreateUserAccount = {

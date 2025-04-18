@@ -1,14 +1,14 @@
 "use client";
-import appWriteService from "@/appwrite/config";
+import appWriteService from "@/lib/appwrite";
 import useAuth from "@/context/useAuth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState, FormEvent } from "react";
-import { toast } from "react-hot-toast";
+import { Toaster,toast } from "react-hot-toast";
 
 export const Login = () => {
   const router = useRouter();
-  const { setAuthStatus } = useAuth();
+  const { setAuthStatus, authStatus } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -42,6 +42,7 @@ export const Login = () => {
         toast.success("Login successful!");
         setAuthStatus(true);
         router.push("/profile");
+        console.log("Login successful:", authStatus);
       }
     } catch (err: any) {
       setError(err.message);
@@ -53,6 +54,7 @@ export const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black px-4">
+      <Toaster position="top-center" reverseOrder={false} />
       <form
         onSubmit={loginUser}
         className="w-full max-w-md bg-white/5 backdrop-blur-lg border border-white/10 p-8 rounded-2xl shadow-2xl"
