@@ -25,10 +25,10 @@ export const Hero = () => {
           Your blazing-fast AI assistant built with Groq LPU acceleration. Ask questions, get answers, brainstorm ideas, and explore knowledge at light speed.
         </p>
 
-        <Link href="/chat">
+        <Link href="/about">
           <button className="px-6 py-3 bg-gradient-to-br from-purple-600 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:scale-105 transition-transform duration-200 animate-fade-in delay-200">
             <MessageCircle className="inline-block mr-2" size={18} />
-            Start Chatting
+            About Us
           </button>
         </Link>
       </div>

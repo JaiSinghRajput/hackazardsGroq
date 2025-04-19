@@ -1,18 +1,36 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { UserCircle2 } from "lucide-react";
 import appWriteService from "@/lib/appwrite";
 import { useRouter } from "next/navigation";
 
-
-const ProfileCard= () => {
-  const avatarUrl = ""
-  const name = ""
-  const email = ""
-  const user = appWriteService.getCurrentUser();
-  if (!user) {
-    return <div className="text-center text-red-500">User not found</div>;
+const ProfileCard = () => {
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
+  if (!appWriteService.isLoggedIn()) {
+    router.push("/login");
   }
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const currentUser = await appWriteService.getCurrentUser();
+        setUser(currentUser);
+      } catch (err) {
+        console.error("Failed to fetch user", err);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (!user) {
+    return <div className="text-center text-white/70">Loading user info...</div>;
+  }
+
+  const avatarUrl = ""; // If you have user.photoUrl or similar, add it
+  const name = user.name || "Anonymous";
+  const email = user.email || "Not available";
+
   return (
     <div className="max-w-sm w-full p-6 rounded-2xl shadow-lg backdrop-blur-lg bg-white/5 border border-white/10 text-white flex flex-col items-center gap-4">
       {avatarUrl ? (
@@ -33,11 +51,12 @@ const ProfileCard= () => {
       </div>
 
       <button
-      onClick={()=>{
-        appWriteService.LogoutUser();
-        useRouter().push("/");
-      }}
-      className="mt-2 px-4 py-2 text-sm bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg hover:opacity-90 transition font-medium">
+        onClick={async () => {
+          await appWriteService.LogoutUser();
+          router.push("/");
+        }}
+        className="mt-2 px-4 py-2 text-sm bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg hover:opacity-90 transition font-medium"
+      >
         Logout
       </button>
     </div>

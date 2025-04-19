@@ -3,6 +3,7 @@ import appWriteService, { AppWriteService } from "@/lib/appwrite";
 import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/context/authcontext";
 import React, { useState, useEffect, Children } from "react";
+import Footer from "@/components/Footer";
 
 const Spinner = () => (
   <div className="flex justify-center items-center py-4">
@@ -23,8 +24,10 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
   {!loading && (
       <>
           <Navbar />
-          <main className="px-2 py-4">{children}</main>
+          <main className="px-2 py-4 pt-15">{children}</main>
+          <Footer/>
       </>
+    
   )}
 </AuthProvider>
 
