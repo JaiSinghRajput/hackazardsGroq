@@ -17,7 +17,7 @@ const Navbar = () => {
         {/* Right Side */}
         <div className="flex items-center gap-4">
           {authStatus && (
-            <div className="flex md:hidden items-center gap-3 text-white/80 text-sm font-medium">
+            <div className="flex items-center gap-3 text-white/80 text-sm font-medium">
               <Link href="/chat" className="hover:text-purple-400 transition">Chat</Link>
               <Link href="/profile" className="hover:text-purple-400 transition">Profile</Link>
             </div>
