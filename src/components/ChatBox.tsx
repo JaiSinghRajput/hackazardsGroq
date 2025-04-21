@@ -20,7 +20,7 @@ export const ChatBox = () => {
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, streamedMessages]);
+  }, [messages]); // removed streamedMessages to prevent force scroll
 
   const typeMessage = (message: string, index: number, callback: () => void) => {
     let i = -1;
@@ -31,11 +31,11 @@ export const ChatBox = () => {
         [index]: prev[index] + message[i],
       }));
       i++;
-      if (i >= message.length-1) {
+      if (i >= message.length - 1) {
         clearInterval(interval);
         callback();
       }
-    }, 2); // Adjust typing speed here
+    }, 2);
   };
 
   const sendMessage = async () => {
@@ -86,24 +86,24 @@ export const ChatBox = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black text-white px-4 py-6 overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black text-white px-2 sm:px-4 py-4 sm:py-6 overflow-hidden">
       <div className="hidden lg:block absolute -top-10 -left-20 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse z-0" />
       <div className="hidden lg:block absolute -bottom-10 -right-20 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse z-0" />
 
-      <div className="relative z-10 w-full max-w-screen-lg grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 items-start">
-        <div className="hidden lg:flex flex-col justify-center items-start p-8 text-left text-white/80 space-y-4">
-          <h2 className="text-4xl font-bold">Welcome 👋</h2>
+      <div className="relative z-10 w-full max-w-full sm:max-w-screen-sm lg:max-w-screen-lg grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-4 sm:gap-6 items-start">
+        <div className="hidden lg:flex flex-col justify-center items-start p-6 text-left text-white/80 space-y-4">
+          <h2 className="text-3xl font-bold">Welcome 👋</h2>
           <p className="text-sm text-white/60 leading-relaxed">
             Ask anything. Get smart replies. Powered by GPT. Your assistant is here to help you explore, learn, and build ideas.
           </p>
         </div>
 
-        <div className="flex flex-col w-full h-[80vh] bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl rounded-2xl p-4 overflow-hidden">
-          <div className="flex-1 overflow-y-auto pr-2 space-y-4 custom-scroll">
+        <div className="flex flex-col w-full min-h-[70vh] lg:h-[80vh] bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl rounded-xl p-3 sm:p-4 overflow-hidden">
+          <div className="flex-1 overflow-y-auto pr-1 sm:pr-2 space-y-4 custom-scroll">
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`flex items-start gap-3 animate-fade-in ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                className={`flex items-start gap-2 sm:gap-3 animate-fade-in ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 {msg.role === "assistant" && (
                   <div className="p-2 bg-purple-600/20 rounded-full">
@@ -112,7 +112,7 @@ export const ChatBox = () => {
                 )}
 
                 <div
-                  className={`max-w-[75%] p-4 rounded-2xl text-sm leading-relaxed shadow-md backdrop-blur-md break-words ${msg.role === "user"
+                  className={`max-w-[80%] p-3 sm:p-4 rounded-2xl text-sm leading-relaxed shadow-md backdrop-blur-md break-words ${msg.role === "user"
                       ? "bg-gradient-to-br from-purple-600 to-blue-500 text-white"
                       : "bg-white/10 border border-white/10 text-white/90"
                     }`}
@@ -162,7 +162,6 @@ export const ChatBox = () => {
                               </code>
                             );
                           },
-
                           a: ({ node, ...props }) => (
                             <a
                               {...props}
@@ -232,17 +231,17 @@ export const ChatBox = () => {
             <div ref={chatEndRef} />
           </div>
 
-          <div className="mt-4 flex items-center gap-3">
+          <div className="mt-3 sm:mt-4 flex items-center gap-2 sm:gap-3">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && sendMessage()}
               placeholder="Type your message..."
-              className="w-full px-4 py-2 bg-white/10 text-white rounded-lg outline-none focus:ring-2 focus:ring-purple-400"
+              className="w-full px-3 py-2 sm:px-4 bg-white/10 text-white rounded-lg outline-none focus:ring-2 focus:ring-purple-400"
             />
             <button
               onClick={sendMessage}
-              className="px-4 py-2 bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg text-white font-semibold"
+              className="px-3 sm:px-4 py-2 bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg text-white font-semibold"
             >
               Send
             </button>

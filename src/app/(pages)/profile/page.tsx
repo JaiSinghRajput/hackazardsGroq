@@ -6,7 +6,7 @@ import React from "react";
 
 const profilePage = () => {
     const { authStatus} = useAuth();
-    if (authStatus) {
+    if (!authStatus) {
         useRouter().push("/login");
     }
     else {

@@ -3,13 +3,19 @@ import React, { useEffect, useState } from "react";
 import { UserCircle2 } from "lucide-react";
 import appWriteService from "@/lib/appwrite";
 import { useRouter } from "next/navigation";
+import useAuth from "@/context/useAuth";
 
 const ProfileCard = () => {
   const [user, setUser] = useState<any>(null);
   const router = useRouter();
-  if (!appWriteService.isLoggedIn()) {
-    router.push("/login");
-  }
+  const {setAuthStatus} = useAuth();
+
+  useEffect(() => {
+    if (!appWriteService.isLoggedIn()) {
+      router.push("/login");
+    }
+  }, []);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -24,41 +30,46 @@ const ProfileCard = () => {
   }, []);
 
   if (!user) {
-    return <div className="text-center text-white/70">Loading user info...</div>;
+    return <div className="text-center text-white/70 mt-10">Loading user info...</div>;
   }
 
-  const avatarUrl = ""; // If you have user.photoUrl or similar, add it
+  const avatarUrl = ""; // Optional: add user.avatarUrl
   const name = user.name || "Anonymous";
   const email = user.email || "Not available";
 
   return (
-    <div className="max-w-sm w-full p-6 rounded-2xl shadow-lg backdrop-blur-lg bg-white/5 border border-white/10 text-white flex flex-col items-center gap-4">
-      {avatarUrl ? (
-        <img
-          src={avatarUrl}
-          alt={name}
-          className="w-20 h-20 rounded-full border-2 border-purple-500 object-cover"
-        />
-      ) : (
-        <div className="w-20 h-20 rounded-full bg-purple-500/20 flex items-center justify-center">
-          <UserCircle2 className="w-16 h-16 text-purple-300" />
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black p-4">
+      <div className="w-full max-w-sm p-6 rounded-3xl shadow-2xl backdrop-blur-2xl bg-white/5 border border-white/10 text-white flex flex-col items-center gap-5 transition-transform transform hover:scale-[1.02] duration-300">
+        <div className="relative">
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt={name}
+              className="w-24 h-24 rounded-full border-4 border-gradient-to-tr from-purple-500 to-blue-500 object-cover shadow-md"
+            />
+          ) : (
+            <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-purple-600 to-blue-500 flex items-center justify-center shadow-lg">
+              <UserCircle2 className="w-20 h-20 text-white" />
+            </div>
+          )}
         </div>
-      )}
 
-      <div className="text-center">
-        <h2 className="text-xl font-bold">{name}</h2>
-        <p className="text-sm text-white/70">{email}</p>
+        <div className="text-center space-y-1">
+          <h2 className="text-2xl font-semibold">{name}</h2>
+          <p className="text-sm text-white/60">{email}</p>
+        </div>
+
+        <button
+          onClick={async () => {
+            await appWriteService.LogoutUser();
+            setAuthStatus(false);
+            router.push("/");
+          }}
+          className="px-5 py-2 text-sm bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg hover:opacity-90 transition-all font-medium shadow-md"
+        >
+          Logout
+        </button>
       </div>
-
-      <button
-        onClick={async () => {
-          await appWriteService.LogoutUser();
-          router.push("/");
-        }}
-        className="mt-2 px-4 py-2 text-sm bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg hover:opacity-90 transition font-medium"
-      >
-        Logout
-      </button>
     </div>
   );
 };

@@ -2,8 +2,9 @@
 import React from "react";
 import { Sparkles, Bot, Rocket, MessageCircle } from "lucide-react";
 import Link from "next/link";
-
+import useAuth from "@/context/useAuth";
 export const Hero = () => {
+const {authStatus} = useAuth();
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-black via-gray-900 to-black text-white px-6 py-12 relative overflow-hidden">
       {/* Glows */}
