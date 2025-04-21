@@ -1,8 +1,9 @@
 import useAuth from "@/context/useAuth";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
+
 const Navbar = () => {
-  const { authStatus } = useAuth(); // or replace with your actual auth state
+  const { authStatus } = useAuth();
 
   return (
     <nav className="w-full backdrop-blur-lg bg-white/5 border-b border-white/10 shadow-sm fixed top-0 z-50">
@@ -13,22 +14,22 @@ const Navbar = () => {
           <span className="font-bold text-lg tracking-wide">Groqify</span>
         </Link>
 
-        {/* Nav Links */}
+        {/* Right Side */}
+        <div className="flex items-center gap-4">
+          {authStatus && (
+            <div className="flex md:hidden items-center gap-3 text-white/80 text-sm font-medium">
+              <Link href="/chat" className="hover:text-purple-400 transition">Chat</Link>
+              <Link href="/profile" className="hover:text-purple-400 transition">Profile</Link>
+            </div>
+          )}
 
-        {authStatus && (
-
-          <div className="hidden md:flex items-center gap-6 text-white/80 text-sm font-medium">
-            <Link href="/chat" className="hover:text-purple-400 transition">chat</Link>
-            <Link href="/profile" className="hover:text-purple-400 transition">Profile</Link>
-          </div>
-        )}
-
-        <Link
-          href={authStatus ? "/chat" : "/login"}
-          className="ml-4 px-4 py-2 text-sm bg-gradient-to-br from-purple-600 to-blue-500 text-white rounded-lg hover:opacity-90 transition hidden md:inline-block"
-        >
-          {authStatus ? "Start Chatting" : "Login"}
-        </Link>
+          <Link
+            href={authStatus ? "/chat" : "/login"}
+            className="px-4 py-2 text-sm bg-gradient-to-br from-purple-600 to-blue-500 text-white rounded-lg hover:opacity-90 transition"
+          >
+            {authStatus ? "Start Chatting" : "Login"}
+          </Link>
+        </div>
       </div>
     </nav>
   );
