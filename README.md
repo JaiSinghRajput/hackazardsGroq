@@ -50,8 +50,8 @@ Groqify is a GPT-powered chat app built for speed. It leverages the **Groq API**
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/your-username/groqify.git
-cd groqify
+git clone git@github.com:JaiSinghRajput/hackazardsGroq.git
+cd hackazardsGroq
 ```
 
 2. **Install dependencies**
@@ -85,7 +85,7 @@ Groqify is built from the ground up to utilize the **Groq API**, pushing the bou
 
 ## 📜 License
 
-MIT © 2025 [Your Name or Team]
+MIT © 2025 Jai Singh
 
 ---
 
